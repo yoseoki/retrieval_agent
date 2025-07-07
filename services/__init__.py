@@ -3,3 +3,4 @@ from . import ai
 from . import db
 from . import crawler
 from . import faissdb
+from . import notion
