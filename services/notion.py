@@ -9,7 +9,8 @@ class NotionClient():
     def __init__(self):
         self.token = settings.NOTION_API_KEY
         self.database_id = settings.NOTION_DATABASE_ID
-        self.base_url = settings.NOTION_BASE_URL
+        self.page_url = settings.NOTION_PAGE_URL
+        self.query_url = settings.NOTION_QUERY_URL
         self.headers = {
             "Authorization": f"Bearer {self.token}",
             "Content-Type": "application/json",
@@ -68,7 +69,7 @@ class NotionClient():
             }
         }
 
-        response = requests.post(self.base_url, headers=self.headers, json=payload)
+        response = requests.post(self.page_url, headers=self.headers, json=payload)
         response.raise_for_status()
 
     def upload(self, papers, translated_papers):
