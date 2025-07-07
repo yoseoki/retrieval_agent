@@ -20,3 +20,12 @@ def add_query_paper_to_db():
     query = input("Please input keywords for update db(ex. grassmann manifold learning) : ")
     papers = crawler.search_arxiv_with_query(query)
     dbms.save_papers(papers)
+
+def update():
+    dbms = DB.MySQLClient()
+    faiss_dbms = FDB.FAISSClient()
+
+    papers = dbms.fetch_papers_by_unembed()
+    faiss_dbms.add(papers)
+    print("update over!")
+
