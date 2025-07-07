@@ -43,3 +43,14 @@ def translate_specific_paper():
     notion.upload(papers, translated_papers)
     print("create over!")
 
+def translate_query_paper():
+    genai = AI.GenAIClient()
+    faiss_dbms = FDB.FAISSClient()
+    notion = NOTION.NotionClient()
+
+    query = input("Please input keywords for query FAISS db(ex. grassmann manifold learning) : ")
+    papers = faiss_dbms.query(query)
+    translated_papers = genai.translate_abstract(papers)
+    notion.upload(papers, translated_papers)
+    print("create over!")
+
