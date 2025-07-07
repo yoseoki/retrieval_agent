@@ -21,6 +21,10 @@ class Settings:
     OPENAI_EMBEDDING_DIM: int = int(os.getenv("OPENAI_EMBEDDING_DIM"))
     GENAI_MODEL: str = os.getenv("GENAI_MODEL")
 
+    # FAISS DB
+    FAISS_INDEX_FILE: str = os.getenv("FAISS_INDEX_FILE")
+    FAISS_MAP_FILE: str = os.getenv("FAISS_MAP_FILE")
+
     # Notion API
     NOTION_API_KEY: str = os.getenv("NOTION_API_KEY")
     NOTION_DATABASE_ID: str = os.getenv("NOTION_DATABASE_ID")
