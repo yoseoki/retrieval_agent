@@ -74,5 +74,5 @@ class GenAIClient():
         for p, abstract in zip(papers, translated_abstracts):
             new_p = copy.deepcopy(p)
             new_p.abstract = abstract
-            translated_papers.append(translated_papers)
+            translated_papers.append(new_p)
         return translated_papers
