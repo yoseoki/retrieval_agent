@@ -45,8 +45,10 @@ class NotionClient():
         return arxiv_ids
 
     def _build_rows(self, papers, translated_papers):
+        existing_ids = set(self._get_existing_arxiv_ids())
         rows = []
         for p, new_p in zip(papers, translated_papers):
+            if p.arxiv_id in existing_ids: continue
             row = NotionArticleRow(
                 p.arxiv_id,
                 p.title,
