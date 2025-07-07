@@ -5,10 +5,6 @@ import google.generativeai as genai
 from core import settings
 import copy
 
-DIM = 1536  # 차원 수는 사용하는 임베딩 모델에 따라 다름(OpenAI text-embedding-3-large)
-MAP_FILE = "DB/id_map.json"
-INDEX_FILE = "DB/faiss.index"
-
 openai.api_key = settings.OPENAI_API_KEY
 genai.configure(api_key=settings.GENAI_API_KEY)
 
