@@ -17,6 +17,33 @@ class NotionClient():
             "Notion-Version": "2022-06-28"
         }
 
+    def _get_existing_arxiv_ids(self):
+        url = f"{self.query_url}/{self.database_id}/query"
+        arxiv_ids = []
+        has_more = True
+        next_cursor = None
+
+        while has_more:
+            payload = {}
+            if next_cursor:
+                payload["start_cursor"] = next_cursor
+
+            response = requests.post(url, headers=self.headers, json=payload)
+            response.raise_for_status()
+            data = response.json()
+
+            for result in data["results"]:
+                properties = result.get("properties", {})
+                id_field = properties.get("ID", {})
+                if "title" in id_field and id_field["title"]:
+                    arxiv_id = id_field["title"][0]["text"]["content"]
+                    arxiv_ids.append(arxiv_id)
+
+            has_more = data.get("has_more", False)
+            next_cursor = data.get("next_cursor")
+
+        return arxiv_ids
+
     def _build_rows(self, papers, translated_papers):
         rows = []
         for p, new_p in zip(papers, translated_papers):
