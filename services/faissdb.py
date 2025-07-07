@@ -1,4 +1,4 @@
-# services/faiss.py
+# services/faissdb.py
 
 import faiss
 import numpy as np
