@@ -2,7 +2,7 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv() # .env 파일 로드
+load_dotenv()
 
 class Settings:
     # Source API
