@@ -29,5 +29,7 @@ class Settings:
     NOTION_API_KEY: str = os.getenv("NOTION_API_KEY")
     NOTION_DATABASE_ID: str = os.getenv("NOTION_DATABASE_ID")
     NOTION_BASE_URL: str = os.getenv("NOTION_BASE_URL")
+    NOTION_PAGE_URL: str = os.getenv("NOTION_PAGE_URL")
+    NOTION_QUERY_URL: str = os.getenv("NOTION_QUERY_URL")
 
 settings = Settings()
