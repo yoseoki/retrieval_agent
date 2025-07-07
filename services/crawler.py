@@ -42,9 +42,10 @@ class ArxivAPIClient():
         papers = self._parse_entries(response.text)
         return papers
     
-    def search_arxiv_with_id(self, arxiv_id):
+    def search_arxiv_with_ids(self, arxiv_ids):
+        id_list_str = ",".join(arxiv_ids)
         params = {
-            "id_list": arxiv_id
+            "id_list": id_list_str
         }
         response = requests.get(self.base_url, params=params)
         response.raise_for_status()
