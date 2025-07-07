@@ -17,6 +17,9 @@ class Settings:
     # AI Translation API
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY")
     GENAI_API_KEY: str = os.getenv("GENAI_API_KEY")
+    OPENAI_EMBEDDING_MODEL: str = os.getenv("OPENAI_EMBEDDING_MODEL")
+    OPENAI_EMBEDDING_DIM: int = int(os.getenv("OPENAI_EMBEDDING_DIM"))
+    GENAI_MODEL: str = os.getenv("GENAI_MODEL")
 
     # Notion API
     NOTION_API_KEY: str = os.getenv("NOTION_API_KEY")
