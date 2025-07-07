@@ -8,6 +8,6 @@ from .commands import *
 
 # update()
 
-# query = input("Please input keywords for update db(ex. grassmann manifold learning) : ")
+# query = input("Please input keywords for query(ex. grassmann manifold learning) : ")
 # add_query_paper_to_db(query)
 # translate_query_paper(query)
