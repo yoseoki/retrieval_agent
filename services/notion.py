@@ -102,6 +102,8 @@ class NotionClient():
         response.raise_for_status()
 
     def upload(self, papers, translated_papers):
+        print(f"Notion : Trying to upload {len(papers)} papers...", end=" ")
         rows = self._build_rows(papers, translated_papers)
         for row in rows:
             self._upload_row(row)
+        print(f"OK, {len(rows)} papers uploaded.")
