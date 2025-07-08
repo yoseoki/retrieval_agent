@@ -20,6 +20,7 @@ class OpenAIClient():
             model=self.model,
             dimensions=self.dim
         )
+        print("OpenAI : make embedding")
         return response["data"][0]["embedding"]
     
 class GenAIClient():
@@ -33,6 +34,7 @@ class GenAIClient():
         return combined_text
 
     def translate_abstract(self, papers):
+        print(f"GenAI : Trying to translate {len(papers)} papers...", end=" ")
         text = self._concatenate_abstracts(papers)
         model = genai.GenerativeModel(self.model)
         prompt = f"""## 역할, 목표
@@ -75,4 +77,5 @@ class GenAIClient():
             new_p = copy.deepcopy(p)
             new_p.abstract = abstract
             translated_papers.append(new_p)
+        print(f"OK, {len(translated_papers)} papers translated.")
         return translated_papers
