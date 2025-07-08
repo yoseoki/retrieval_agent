@@ -18,7 +18,7 @@ class MySQLClient():
     def save_papers(self, papers):
         conn = mysql.connector.connect(**self.config)
         cursor = conn.cursor()
-        print(f"Trying to save {len(papers)} papers...", end=" ")
+        print(f"DB : Trying to save {len(papers)} papers...", end=" ")
         savedNum = 0
         for p in papers:
             try:
@@ -45,7 +45,7 @@ class MySQLClient():
     def fetch_papers_by_unembed(self, limit=1000):
         conn = mysql.connector.connect(**self.config)
         cursor = conn.cursor(dictionary=True)
-        print("Trying to load all unembedded papers...", end=" ")
+        print("DB : Trying to load all unembedded papers...", end=" ")
         try:
             cursor.execute("""
                 SELECT arxiv_id, title, abstract, url FROM papers
@@ -75,7 +75,7 @@ class MySQLClient():
     def fetch_papers_by_arxiv_ids(self, arxiv_ids):
         conn = mysql.connector.connect(**self.config)
         cursor = conn.cursor(dictionary=True)
-        print(f"Trying to load {len(arxiv_ids)} papers...", end=" ")
+        print(f"DB : Trying to load {len(arxiv_ids)} papers...", end=" ")
         placeholders = ', '.join(['%s'] * len(arxiv_ids))  # safe parameter binding
         query = f"SELECT arxiv_id, title, abstract, url FROM papers WHERE arxiv_id IN ({placeholders})"
         try:
@@ -102,11 +102,11 @@ class MySQLClient():
     
     def update_embedded_papers(self, arxiv_ids):
         if not arxiv_ids:
-            print("Nothing to update!")
+            print("DB : Nothing to update!")
             return
         conn = mysql.connector.connect(**self.config)
         cursor = conn.cursor()
-        print(f"Trying to update {len(arxiv_ids)} papers...", end=" ")
+        print(f"DB : Trying to update {len(arxiv_ids)} papers...", end=" ")
         placeholders = ', '.join(['%s'] * len(arxiv_ids))
         query = f"UPDATE papers SET embedded = TRUE WHERE arxiv_id IN ({placeholders})"
         try:
