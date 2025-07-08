@@ -94,7 +94,7 @@ class FAISSClient():
         print(f"FAISS : Trying to search {k} embeddings by query...", end=" ")
         query_embedding = self.ai_client.get_embedding(query)
         D, I = index.search(np.array([query_embedding]).astype("float32"), k=k)
-        print(f"OK, {len(I(0))} embeddings found.")
+        print(f"OK, {I[0].shape[0]} embeddings found.")
 
         arxiv_ids = [id_map[str(idx)] for idx in I[0]]
         papers = self.db_client.fetch_papers_by_arxiv_ids(arxiv_ids)
