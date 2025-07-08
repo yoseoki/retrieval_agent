@@ -19,35 +19,39 @@ class FAISSClient():
 
     def _load_faiss_index(self):
         if os.path.exists(self.index_file_path):
-            print(f"Loading FAISS Index... : {self.index_file_path}", end=" ")
+            print(f"FAISS : Loading FAISS Index({self.index_file_path})...", end=" ")
             index = faiss.read_index(self.index_file_path)
-            print("done.")
+            print("OK.")
             return index
         else:
-            print("Create new FAISS Index...", end=" ")
+            print("FAISS : Create new FAISS Index...", end=" ")
             index = faiss.IndexFlatL2(self.dim)
-            print("done.")
+            print("OK.")
             return index
 
     def _load_id_map(self):
         if os.path.exists(self.map_file_path):
-            print(f"Loading Map file... : {self.map_file_path}", end=" ")
+            print(f"FAISS : Loading Map file({self.map_file_path})...", end=" ")
             with open(self.map_file_path, "r") as f:
                 id_map = json.load(f)
-            print("done.")
+            print("OK.")
             return id_map
         else:
             print("Create new Map file...", end=" ")
             id_map = {}
-            print("done.")
+            print("OK.")
             return id_map
         
     def _save_faiss_index(self, index):
+        print(f"FAISS : Saving FAISS Index({self.index_file_path})...", end=" ")
         faiss.write_index(index, self.index_file_path)
+        print("OK.")
 
     def _save_id_map(self, id_map):
+        print(f"FAISS : Saving Map file({self.map_file_path})...", end=" ")
         with open(self.map_file_path, "w") as f:
             json.dump(id_map, f, indent=2)
+        print("OK.")
 
     def add(self, papers):
         index = self._load_faiss_index()
@@ -69,11 +73,12 @@ class FAISSClient():
             new_arxiv_ids.append(arxiv_id)
 
         if not new_vectors:
-            print("No vectors to add!")
+            print("FAISS : No vectors to add!")
             return
-
+        
+        print("FAISS : Trying to add new embeddings...", end=" ")
         index.add(np.vstack(new_vectors))
-        print("New embeddings successfully added to FAISS index!")
+        print(f"OK, {len(new_vectors)} embeddings added.")
 
         start_idx = len(id_map)
         for i, arxiv_id in enumerate(new_arxiv_ids):
@@ -86,8 +91,10 @@ class FAISSClient():
     def query(self, query, k=5):
         index = self._load_faiss_index()
         id_map = self._load_id_map()
+        print(f"FAISS : Trying to search {k} embeddings by query...", end=" ")
         query_embedding = self.ai_client.get_embedding(query)
         D, I = index.search(np.array([query_embedding]).astype("float32"), k=k)
+        print(f"OK, {len(I(0))} embeddings found.")
 
         arxiv_ids = [id_map[str(idx)] for idx in I[0]]
         papers = self.db_client.fetch_papers_by_arxiv_ids(arxiv_ids)
