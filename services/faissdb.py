@@ -91,8 +91,8 @@ class FAISSClient():
     def query(self, query, k=5):
         index = self._load_faiss_index()
         id_map = self._load_id_map()
-        print(f"FAISS : Trying to search {k} embeddings by query...", end=" ")
         query_embedding = self.ai_client.get_embedding(query)
+        print(f"FAISS : Trying to search {k} embeddings by query...", end=" ")
         D, I = index.search(np.array([query_embedding]).astype("float32"), k=k)
         print(f"OK, {I[0].shape[0]} embeddings found.")
 
